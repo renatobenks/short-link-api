@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  api:
+    container_name: API_SERVICE
+    build: '.'
+    volumes:
+      - ./:/api
+      - ./node_modules:/api/node_modules
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - '9000:9000'
+
+  db:
+    image: 'mongo'
+    container_name: MONGO_DB
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data/db:/data/db
